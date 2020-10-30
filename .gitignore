@@ -6,6 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+# Project files and dat Project files and data 
+.DS_Store
+Kickstarter.zip
+Kickstarter/
+Task 2_Project_LifeCycle.pdf
+
+
 # Distribution / packaging
 .Python
 build/
