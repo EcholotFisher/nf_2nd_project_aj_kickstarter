@@ -4,6 +4,9 @@
 # Conda environment (TO BE UPDATED AT THE END OF PROJECT!)
 # packages in environment at /Users/jenny/opt/anaconda3/envs/nf_2nd_project:
 #
+scikit-learn
+matplotlib
+
 # Name                    Version                   Build  Channel
 appnope                   0.1.0                 py38_1001  
 argon2-cffi               20.1.0           py38haf1e3a3_1  
