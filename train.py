@@ -22,9 +22,7 @@ df = clean_data(df)
 # FUTURE WORK: move this to after the test train split and 
 #   deal with mismatched category_sub unique values in train and test data
 # split categorical columns into dummies
-print('get_dummies')
-cat_columns=['country', 'category_main','category_sub']
-df = make_dummies(df, cat_columns)
+
 
 # encode target variable 'state' to numerical values, success is 1 all others are fail and 0
 df = get_target(df,target='state', new_target_var='success', success_label='successful')
@@ -52,7 +50,10 @@ X_train = currency_conversion(X_train)
 
 # drop unnecessary columns
 X_train = drop_columns(X_train)
-    
+
+print('get_dummies')
+cat_columns=['country', 'category_main','category_sub']
+X_train = make_dummies(X_train, cat_columns)    
 
 # address skew   by applying logarithm  
 num_columns = ['project_duration_days', 'blurb_length', 'usd_goal']
@@ -104,8 +105,8 @@ X_test = currency_conversion(X_test)
 X_test = drop_columns(X_test)
     
 # split categorical columns into dummies
-# cat_columns=['country', 'category_main','category_sub']
-# X_test = make_dummies(X_test, cat_columns)
+cat_columns=['country', 'category_main','category_sub']
+X_test = make_dummies(X_test, cat_columns)
 
 # address skew   by applying logarithm  
 num_columns = ['project_duration_days', 'blurb_length', 'usd_goal']
