@@ -1,9 +1,14 @@
 # import packages 
 import pandas as pd
 import numpy as np
+from sklearn.utils import resample
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.utils import resample
+from sklearn.metrics import confusion_matrix
 import glob
 import json
-from time import time
+RSEED = 50
+#from time import time
 #from sklearn.model_selection import train_test_split
 #from sklearn.metrics import fbeta_score
 
@@ -31,22 +36,23 @@ def load_kickstarter_data(datapath):
                 # append to initial dataframe                   
                 df_ks = pd.concat([df_ks, df], axis=0, ignore_index=True)       
                 print(f'File number {file_idx + 1} added to dataframe')
+                break
     print('File import done')
     return df_ks
 
-    def extract_json_data(data):
+def extract_json_data(data):
     ''' This function extracts specific sub fields from json files embedded in columns of a dataframe
         data: dataframe containing column with json data'''
     data['category_name'] = pd.DataFrame.from_dict([json.loads(data["category"][i])['name'] for i in range(data.shape[0])])
     data['category_slug'] = pd.DataFrame([json.loads(data["category"][i])['slug'] for i in range(data.shape[0])])
     # Split slug into main category and sub category
-    data[['category_main','category_sub']] = df.category_slug.str.split(pat='/', n=1, expand=True)
+    data[['category_main','category_sub']] = data.category_slug.str.split(pat='/', n=1, expand=True)
     data.drop(labels = ['category','category_slug'], axis=1, inplace=True)
     
     print('json columns extracted')
     return data
 
-    def get_duration(data):
+def get_duration(data):
     #Convert from unix time stamp to more readable time format
     data['converted_deadline'] = pd.to_datetime(data['deadline'], unit='s')
     data['converted_launched_at'] = pd.to_datetime(data['launched_at'], unit='s')
@@ -133,7 +139,7 @@ def drop_columns(data):
     data.drop(columns = ['blurb', 'name', 'converted_deadline', 'converted_launched_at','category_name',], inplace=True) 
     return data
 
-from sklearn.utils import resample
+
 
 def rebalance(X_train, y_train):
     

@@ -1,11 +1,11 @@
 import sys
 import pandas as pd
 import pickle
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import warnings
 warnings.filterwarnings('ignore')
 
-import feature_engineering import load_kickstarter_data, extract_json_data, clean_data, get_duration, get_blurb_length, currency_conversion, get_target, drop_columns, get_target_and_features, make_dummies, fix_skew, scale_features
+from feature_engineering import load_kickstarter_data, extract_json_data, clean_data, get_duration, get_blurb_length, currency_conversion, get_target, drop_columns, get_target_and_features, make_dummies, fix_skew, scale_features
 RSEED = 50
 
 print('Number of arguments:', len(sys.argv), 'arguments.')
@@ -37,9 +37,10 @@ X_test = currency_conversion(X_test)
 # drop unnecessary columns
 X_test = drop_columns(X_test)
     
+# This is FUTURE WORK
 # split categorical columns into dummies
-cat_columns=['country', 'category_main','category_sub']
-X_test = make_dummies(X_test, cat_columns)
+#cat_columns=['country', 'category_main','category_sub']
+#X_test = make_dummies(X_test, cat_columns)
 
 # address skew   by applying logarithm  
 num_columns = ['project_duration_days', 'blurb_length', 'usd_goal']

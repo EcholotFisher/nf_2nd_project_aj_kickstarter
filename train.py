@@ -1,24 +1,30 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
 from sklearn.tree import DecisionTreeClassifier 
-from sklearn.metrics import fbeta_score
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import pickle
 import warnings
 warnings.filterwarnings('ignore')
 
-import feature_engineering import load_kickstarter_data, extract_json_data, clean_data, get_duration, get_blurb_length, currency_conversion, get_target, drop_columns, get_target_and_features, make_dummies, fix_skew, scale_features
+from feature_engineering import load_kickstarter_data, extract_json_data, clean_data, get_duration, get_blurb_length, currency_conversion
+from feature_engineering import get_target, drop_columns, get_target_and_features, make_dummies, fix_skew, scale_features, rebalance
 RSEED = 50
 
 # Read data
 df = load_kickstarter_data('kickstarter/data')
-
 
 # Extract category data from json
 df = extract_json_data(df)
 
 # data cleaning: drop campaigns that are still ongoing and outliers 
 df = clean_data(df)
+
+# FUTURE WORK: move this to after the test train split and 
+#   deal with mismatched category_sub unique values in train and test data
+# split categorical columns into dummies
+print('get_dummies')
+cat_columns=['country', 'category_main','category_sub']
+df = make_dummies(df, cat_columns)
 
 # encode target variable 'state' to numerical values, success is 1 all others are fail and 0
 df = get_target(df,target='state', new_target_var='success', success_label='successful')
@@ -47,9 +53,6 @@ X_train = currency_conversion(X_train)
 # drop unnecessary columns
 X_train = drop_columns(X_train)
     
-# split categorical columns into dummies
-cat_columns=['country', 'category_main','category_sub']
-X_train = make_dummies(X_train, cat_columns)
 
 # address skew   by applying logarithm  
 num_columns = ['project_duration_days', 'blurb_length', 'usd_goal']
@@ -101,8 +104,8 @@ X_test = currency_conversion(X_test)
 X_test = drop_columns(X_test)
     
 # split categorical columns into dummies
-cat_columns=['country', 'category_main','category_sub']
-X_test = make_dummies(X_test, cat_columns)
+# cat_columns=['country', 'category_main','category_sub']
+# X_test = make_dummies(X_test, cat_columns)
 
 # address skew   by applying logarithm  
 num_columns = ['project_duration_days', 'blurb_length', 'usd_goal']
