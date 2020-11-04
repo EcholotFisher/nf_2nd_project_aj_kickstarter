@@ -1,3 +1,4 @@
+import sys
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier 
@@ -10,8 +11,13 @@ from feature_engineering import load_kickstarter_data, extract_json_data, clean_
 from feature_engineering import get_target, drop_columns, get_target_and_features, make_dummies, fix_skew, scale_features, rebalance
 RSEED = 50
 
+# read arguments
+print('Number of arguments:', len(sys.argv), 'arguments.')
+print('Argument List:', str(sys.argv)) 
+
+datapath = sys.argv[1]
 # Read data
-df = load_kickstarter_data('kickstarter/data')
+df = load_kickstarter_data(datapath)
 
 # Extract category data from json
 df = extract_json_data(df)
