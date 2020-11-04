@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.utils import resample
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.utils import resample
-from sklearn.metrics import confusion_matrix
+
 import glob
 import json
 RSEED = 50
@@ -36,7 +36,7 @@ def load_kickstarter_data(datapath):
                 # append to initial dataframe                   
                 df_ks = pd.concat([df_ks, df], axis=0, ignore_index=True)       
                 print(f'File number {file_idx + 1} added to dataframe')
-                break
+                
     print('File import done')
     return df_ks
 

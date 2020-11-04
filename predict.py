@@ -12,7 +12,7 @@ print('Number of arguments:', len(sys.argv), 'arguments.')
 print('Argument List:', str(sys.argv)) 
 
 #in an ideal world this would validated
-# in terminal: python predict.py pickle_file.sav x_test.csv y_test.csv
+# in terminal: python predict.py models/DecisionTreeClassifier_model.sav test_data/X_test.csv test_data/y_test.csv 
 model = sys.argv[1]
 X_test_path = sys.argv[2]
 y_test_path = sys.argv[3]
@@ -39,8 +39,8 @@ X_test = drop_columns(X_test)
     
 # This is FUTURE WORK
 # split categorical columns into dummies
-#cat_columns=['country', 'category_main','category_sub']
-#X_test = make_dummies(X_test, cat_columns)
+cat_columns=['country', 'category_main','category_sub']
+X_test = make_dummies(X_test, cat_columns)
 
 # address skew   by applying logarithm  
 num_columns = ['project_duration_days', 'blurb_length', 'usd_goal']
