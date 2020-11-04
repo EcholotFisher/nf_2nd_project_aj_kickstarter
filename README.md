@@ -6,6 +6,7 @@
 #
 scikit-learn
 matplotlib
+seaborn
 
 # Name                    Version                   Build  Channel
 appnope                   0.1.0                 py38_1001  

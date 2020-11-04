@@ -1,0 +1,12 @@
+name: nf_2nd_project
+channels:
+  - defaults
+dependencies:
+  - python=3.8.5
+  - pandas
+  - jupyterlab
+  - nb_conda_kernels
+  - scikit-learn
+  - matplotlib
+  - seaborn
+prefix: /Users/andrewemmett/opt/anaconda3/envs/nf_2nd_project

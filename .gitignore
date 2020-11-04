@@ -10,8 +10,10 @@ __pycache__/
 .DS_Store
 Kickstarter.zip
 Kickstarter/
+test_data/*.csv
+models/*.sav
 Task 2_Project_LifeCycle.pdf
-
+.vscode/
 
 # Distribution / packaging
 .Python
