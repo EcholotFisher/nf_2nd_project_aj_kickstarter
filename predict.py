@@ -11,7 +11,6 @@ RSEED = 50
 print('Number of arguments:', len(sys.argv), 'arguments.')
 print('Argument List:', str(sys.argv)) 
 
-#in an ideal world this would validated
 # in terminal: python predict.py models/DecisionTreeClassifier_model.sav test_data/X_test.csv test_data/y_test.csv 
 model = sys.argv[1]
 X_test_path = sys.argv[2]
@@ -22,7 +21,7 @@ loaded_model = pickle.load(open(model, 'rb'))
 X_test = pd.read_csv(X_test_path)
 y_test = pd.read_csv(y_test_path)
 
-#feature eng on test data
+# Feature engineering on test data
 # Create predictions using simple model - decision tree
 print("Feature engineering on test data starting...")
 # convert unix timestamps and calculate campaign duration
@@ -50,8 +49,10 @@ X_test = fix_skew(X_test, skewed=num_columns)
 X_test = scale_features(X_test, num_columns)
 print("Feature engineering on test data complete")
 
+# calculate predictions
 y_test_pred = loaded_model.predict(X_test)
 
+# print results
 print("Confusion Matrix: \n", 
 confusion_matrix(y_test, y_test_pred)) 
     
