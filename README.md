@@ -8,12 +8,12 @@ We have created a Conda environment for this purpose.
 This will load all the packages listed at the bottom of this README
 
 ### The Relevant files in this repo are:
-1_Kickstarter_EDA.ipynb : contains our EDA
-2_Kickstarter_modelling.ipynb : contains our exploratory modelling
-train.py : script for training a model
-predict.py : script for predicting values using a test data set
-feature_engineering.py : library of functions used in train and predicitions
-environment.yml: includes environment requirements
+* 1_Kickstarter_EDA.ipynb : contains our EDA.    
+* 2_Kickstarter_modelling.ipynb : contains our exploratory modelling.  
+* train.py : script for training a model  
+* predict.py : script for predicting values using a test data set   
+* feature_engineering.py : library of functions used in train and predicitions    
+* environment.yml: includes environment requirements    
 
 ### To train the model run the following (in our case data_folder is 'kickstarter/data'):
     python train.py <data_folder>
