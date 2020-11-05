@@ -1,3 +1,4 @@
+import sys
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier 
@@ -10,19 +11,20 @@ from feature_engineering import load_kickstarter_data, extract_json_data, clean_
 from feature_engineering import get_target, drop_columns, get_target_and_features, make_dummies, fix_skew, scale_features, rebalance
 RSEED = 50
 
-# Read data
-df = load_kickstarter_data('kickstarter/data')
+# read arguments
+print('Number of arguments:', len(sys.argv), 'arguments.')
+print('Argument List:', str(sys.argv)) 
 
+datapath = sys.argv[1]
+# Read data
+df = load_kickstarter_data(datapath)
+
+# Feature cleanup, modification and engineering
 # Extract category data from json
 df = extract_json_data(df)
 
 # data cleaning: drop campaigns that are still ongoing and outliers 
 df = clean_data(df)
-
-# FUTURE WORK: move this to after the test train split and 
-#   deal with mismatched category_sub unique values in train and test data
-# split categorical columns into dummies
-
 
 # encode target variable 'state' to numerical values, success is 1 all others are fail and 0
 df = get_target(df,target='state', new_target_var='success', success_label='successful')
@@ -66,14 +68,15 @@ X_train = scale_features(X_train, num_columns)
 X_train, y_train = rebalance(X_train, y_train)
 print("Feature engineering on train data complete")
 
-# model
+# initiate model
 print("Training a decision tree classifier")
 clf_tree = DecisionTreeClassifier(criterion = "gini", 
             max_depth=3, min_samples_leaf=5) 
-    # Performing training 
+# Performing training 
 clf_tree.fit(X_train, y_train) 
 # Create predictions using simple model - decision tree
 y_train_pred = clf_tree.predict(X_train) 
+
 # show results
 print("Confusion Matrix: \n", 
 confusion_matrix(y_train, y_train_pred)) 
@@ -89,8 +92,8 @@ print("Saving Decision tree model in the model folder")
 filename = 'models/DecisionTreeClassifier_model.sav'
 pickle.dump(clf_tree, open(filename, 'wb'))
 
-
 # Create predictions using simple model - decision tree
+# Feature engineering on test data
 print("Feature engineering on test data starting...")
 # convert unix timestamps and calculate campaign duration
 X_test = get_duration(X_test)
@@ -117,6 +120,7 @@ X_test = scale_features(X_test, num_columns)
 
 print("Feature engineering on test data complete")
 
+# Calculate predictions
 y_pred = clf_tree.predict(X_test) 
 # show results
 
